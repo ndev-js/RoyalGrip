@@ -11,22 +11,31 @@ const LAYERS = [
   { y: 104, depth: 10, top: "#e4e4e7", left: "#a1a1aa", right: "#71717a", name: "Protective finish", note: "Slate, aluminium or screed" },
 ];
 
-const FIRST_LAYER_MS = 500;
+const FIRST_LAYER_MS = 200;
 const LAYER_GAP_MS = 550;
 const TOP = LAYERS[LAYERS.length - 1];
 
+interface Props {
+  /* The build starts when this turns true; until then the drawing is empty */
+  play: boolean;
+  /* Index of a layer (0 = slab … 3 = finish) to single out by dimming the others */
+  highlight?: number | null;
+  className?: string;
+}
+
 /*
- * The banner's signature animation: the roof waterproofing system assembles itself layer by layer,
- * then a water drop lands on the finished surface and runs off instead of soaking in.
- * The motion lives in index.css (.roof-layer, .roof-label, .roof-drop, .roof-ripple).
+ * The roof waterproofing system assembles itself layer by layer, then a water drop lands on the
+ * finished surface and runs off instead of soaking in. Made for a dark background.
+ * The motion lives in index.css (.roof-play, .roof-layer, .roof-label, .roof-drop, .roof-ripple).
  */
-const RoofBuild = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 560 400" className={className} role="img"
-    aria-label="How a dry roof is built: concrete slab, bitumen primer, torch-on membrane and protective finish, with water running off the top">
+const RoofBuild = ({ play, highlight = null, className = "" }: Props) => (
+  <svg viewBox="0 0 560 400" className={`${play ? "roof-play" : ""} ${className}`} role="img"
+    aria-label="Exploded view of a waterproofed roof: concrete slab, bitumen primer, torch-on membrane and protective finish, with water running off the top">
     {LAYERS.map((l, i) => {
       const delay = FIRST_LAYER_MS + i * LAYER_GAP_MS;
       return (
-        <g key={l.name}>
+        <g key={l.name} className="transition-opacity duration-300"
+          style={{ opacity: highlight === null || highlight === i ? 1 : 0.25 }}>
           <g className="roof-layer" style={{ animationDelay: `${delay}ms` }}>
             <polygon fill={l.left}
               points={`${CX - HALF_W},${l.y} ${CX},${l.y + HALF_H} ${CX},${l.y + HALF_H + l.depth} ${CX - HALF_W},${l.y + l.depth}`} />

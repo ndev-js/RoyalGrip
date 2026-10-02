@@ -71,6 +71,13 @@
   --animate-float: float 5s ease-in-out infinite;
   --animate-pan: pan 6s ease-in-out infinite alternate;
   --animate-page: page-in 0.45s ease-out both;
+  --animate-phrase: phrase-in 0.7s var(--ease-out-soft) both;
+
+  /* Banner headline: the new phrase rises out of its clipped line */
+  @keyframes phrase-in {
+    from { transform: translateY(105%); }
+    to { transform: none; }
+  }
   --animate-progress: progress 6s linear both;
 
   @keyframes progress {
@@ -202,7 +209,7 @@
   }
 }
 
-/* --- Banner diagram (RoofBuild.tsx): the layers drop in one after another, then a water drop runs off the top --- */
+/* --- Roof diagram (RoofBuild.tsx): once `.roof-play` is set the layers drop in one after another, then a water drop runs off the top --- */
 @keyframes roof-layer-in {
   from { opacity: 0; transform: translateY(-80px); }
   60% { opacity: 1; }
@@ -234,25 +241,34 @@
   100% { opacity: 0; transform: scale(1); }
 }
 
-.roof-layer {
+/* Nothing shows until the section scrolls into view and the build is started */
+.roof-layer,
+.roof-label,
+.roof-drop,
+.roof-ripple {
+  opacity: 0;
+}
+
+.roof-play .roof-layer {
   animation: roof-layer-in 0.9s var(--ease-out-soft) both;
 }
 
-.roof-label {
+.roof-play .roof-label {
   animation: roof-label-in 0.6s var(--ease-out-soft) both;
 }
 
 /* The first drop waits for the last layer; after that one falls every seven seconds */
-.roof-drop {
-  opacity: 0;
-  animation: roof-drop 7s linear 3.4s infinite;
+.roof-play .roof-drop {
+  animation: roof-drop 7s linear 3s infinite;
 }
 
 .roof-ripple {
-  opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  animation: roof-ripple 7s linear 3.4s infinite;
+}
+
+.roof-play .roof-ripple {
+  animation: roof-ripple 7s linear 3s infinite;
 }
 
 /* Hero photo drifts slower than the page as you scroll (browsers without scroll timelines just show it still) */

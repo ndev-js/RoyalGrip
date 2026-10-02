@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Award, CheckCircle2, Phone, ShieldCheck, Star } from "lucide-react";
+import { ArrowRight, Award, CheckCircle2, ChevronDown, Phone, ShieldCheck, Star } from "lucide-react";
+import { Link } from "react-router";
 // import { Award, CheckCircle2, Droplets, Phone, ShieldCheck, Star } from "lucide-react";
 import { PHONE_DISPLAY, PHONE_URL } from "../../constants/content";
+import { servicePath } from "../../routes";
 import ButtonLink from "../ui/ButtonLink";
-import RoofBuild from "../ui/RoofBuild";
 import Waves from "../ui/Waves";
 
 const PROMISES = ["Free site survey", "Itemised written quote", "Flood tested before handover"];
@@ -19,10 +20,26 @@ const Stars = () => (
 /* The banner cycles through these: each photo comes with the problem it shows, which completes the headline "Stop … for good."
    `widths` are the sizes saved in public/images/hero/ as <name>-<width>.webp; the largest is the original's full resolution. */
 const SLIDES = [
-  { phrase: "roof leaks", name: "roof", widths: [1280, 1920, 2880, 3840], position: "object-[78%_center] lg:object-right", alt: "Applicator spraying a waterproof coating onto a flat concrete roof" },
-  { phrase: "damp walls", name: "damp", widths: [1280, 1920, 2880, 3840], position: "object-center", alt: "Wall stained and flaking from long-term damp" },
-  { phrase: "tank leaks", name: "tank", widths: [1280, 1920, 2668], position: "object-center", alt: "Clear water in a lined tank" },
-  { phrase: "seepage", name: "bathroom", widths: [1280, 1920, 2880, 3499], position: "object-center", alt: "Tiled bathroom with a walk-in shower" },
+  {
+    phrase: "roof leaks", name: "roof", widths: [1280, 1920, 2880, 3840], position: "object-[78%_center] lg:object-right",
+    alt: "Applicator spraying a waterproof coating onto a flat concrete roof",
+    title: "Roof leaks", fix: "Torch-applied membrane that seals flat roofs against monsoon rain and summer heat.", service: "roof-waterproofing",
+  },
+  {
+    phrase: "damp walls", name: "damp", widths: [1280, 1920, 2880, 3840], position: "object-center",
+    alt: "Wall stained and flaking from long-term damp",
+    title: "Damp walls", fix: "Basement tanking and a damp proof course that stop moisture rising through the walls.", service: "basement-waterproofing",
+  },
+  {
+    phrase: "tank leaks", name: "tank", widths: [1280, 1920, 2668], position: "object-center",
+    alt: "Clear water in a lined tank",
+    title: "Tank leaks", fix: "Crack repair and a flexible lining, fill-tested before the tank goes back into service.", service: "water-tank-waterproofing",
+  },
+  {
+    phrase: "seepage", name: "bathroom", widths: [1280, 1920, 2880, 3499], position: "object-center",
+    alt: "Tiled bathroom with a walk-in shower",
+    title: "Bathroom seepage", fix: "A liquid membrane under the tiles, sealed at every pipe and floor trap.", service: "bathroom-waterproofing",
+  },
 ];
 
 const heroSrc = (name: string, width: number) => `/images/hero/${name}-${width}.webp`;
@@ -85,7 +102,9 @@ const Hero = () => {
           {/* On phones "Stop" takes its own line, so a longer phrase never wraps and shifts the page */}
           <span className="animate-fade block [animation-delay:120ms] sm:inline-block">Stop&nbsp;</span>
           {/* Re-keyed per slide so the new phrase rises in */}
-          <span key={slide} className="animate-fade inline-block [animation-delay:60ms]">{SLIDES[slide].phrase}</span>
+          <span className="-mb-[0.16em] inline-block overflow-hidden pb-[0.16em] align-bottom">
+            <span key={slide} className="animate-phrase inline-block">{SLIDES[slide].phrase}</span>
+          </span>
           <span className="block">
             <span className="animate-fade inline-block" style={{ animationDelay: "560ms" }}>
               <span className="animate-pan bg-linear-to-r from-orange-500 via-amber-300 to-orange-500 bg-[length:200%_auto] bg-clip-text text-transparent">
@@ -113,7 +132,7 @@ const Hero = () => {
           <ButtonLink to={PHONE_URL} variant="ghost"><Phone className="h-4 w-4" /> {PHONE_DISPLAY}</ButtonLink>
         </div>
 
-        <div className="animate-fade mt-9 flex items-center gap-2 [animation-delay:1000ms]" role="group" aria-label="Banner slides">
+        <div className="animate-fade mt-9 flex items-center gap-2 [animation-delay:1000ms] lg:hidden" role="group" aria-label="Banner slides">
           {SLIDES.map((sl, i) => (
             <button key={sl.phrase} type="button" onClick={() => setSlide(i)}
               aria-label={`Show slide ${i + 1}: ${sl.phrase}`} aria-current={i === slide}
@@ -132,8 +151,7 @@ const Hero = () => {
           </span>
         </div>
 
-        {/* Phones and tablets: the proof points sit inline; on desktop they become the floating cards on the right */}
-        <div className="animate-fade mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-7 [animation-delay:1060ms] lg:hidden">
+        <div className="animate-fade mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-7 [animation-delay:1060ms]">
           <div className="flex items-center gap-3">
             <Stars />
             <p className="text-sm text-slate-200"><strong className="font-extrabold text-white">4.9/5</strong> from 180+ clients</p>
@@ -145,15 +163,41 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="relative hidden h-[28rem] lg:col-span-5 lg:block">
-        {/* Dark glass panel so the diagram and its labels stay readable over any of the photos */}
-        <div className="animate-fade absolute inset-y-0 -right-2 left-4 flex flex-col justify-center rounded-3xl bg-navy-950/60 px-6 py-5 shadow-2xl shadow-navy-950/50 ring-1 ring-white/10 backdrop-blur-md [animation-delay:300ms]">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-orange-400">How a dry roof is built</p>
-          <RoofBuild className="mt-1 w-full" />
-          <p className="text-xs leading-relaxed text-slate-300">
-            Four layers, installed and tested by one crew. Water lands on the roof and runs off it, not into it.
-          </p>
-        </div>
+      <div className="relative hidden lg:col-span-5 lg:block">
+        {/* The slideshow as a list: the problem on screen is open, with the fix and a link to that service. Picking another switches the photo. */}
+        <ol aria-label="What we fix" className="ml-auto max-w-sm space-y-3">
+          {SLIDES.map((sl, i) => {
+            const on = i === slide;
+            return (
+              <li key={sl.name} className="animate-fade" style={{ animationDelay: `${700 + i * 110}ms` }}>
+                <div className={`overflow-hidden rounded-2xl ring-1 backdrop-blur-md transition-[background-color,box-shadow,--tw-ring-color] duration-500 ${
+                  on ? "bg-navy-950/80 shadow-2xl shadow-navy-950/60 ring-orange-500/60" : "bg-navy-950/45 ring-white/10 hover:bg-navy-950/65"
+                }`}>
+                  <button type="button" onClick={() => setSlide(i)} aria-expanded={on}
+                    className="flex w-full items-center gap-4 px-5 py-4 text-left">
+                    <span className={`font-display text-sm font-black transition-colors duration-300 ${on ? "text-orange-400" : "text-slate-400"}`}>0{i + 1}</span>
+                    <span className="flex-1 text-base font-extrabold text-white">{sl.title}</span>
+                    <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-500 ${on ? "rotate-180 text-orange-400" : ""}`} />
+                  </button>
+
+                  <div inert={!on} className={`grid transition-[grid-template-rows] duration-500 ease-out-soft ${on ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+                    <div className="overflow-hidden">
+                      <p className="px-5 text-sm leading-relaxed text-slate-300">{sl.fix}</p>
+                      <Link to={servicePath(sl.service)}
+                        className="group mx-5 mb-4 mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-orange-400 transition-all hover:gap-2.5">
+                        See how we fix it <ArrowRight className="h-4 w-4" />
+                      </Link>
+                      {/* Fills over the time the slide stays up */}
+                      <div className="h-0.5 bg-white/10">
+                        {on && <div className="animate-progress h-full origin-left bg-orange-500" style={{ animationDuration: `${SLIDE_MS}ms` }} />}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
 
         {/* Stacked down the right edge, staggered, so the worker in the photo stays visible */}
         {/* <div className="animate-fade absolute right-0 top-4 [animation-delay:900ms]">

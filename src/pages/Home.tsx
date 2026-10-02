@@ -2,6 +2,7 @@ import Contact from "../components/sections/Contact";
 import CtaBanner from "../components/sections/CtaBanner";
 import Faq from "../components/sections/Faq";
 import Hero from "../components/sections/Hero";
+import HowItWorks from "../components/sections/HowItWorks";
 import Process from "../components/sections/Process";
 import Products from "../components/sections/Products";
 import QuickQuote from "../components/sections/QuickQuote";
@@ -21,6 +22,7 @@ const Home = () => (
     <Stats />
     <Ticker />
     <Services />
+    <HowItWorks />
     <Sectors />
     <WhyUs />
     <Products />
