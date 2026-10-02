@@ -2,13 +2,15 @@
 <html lang="en-PK">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
 
     <title>RoyalGrip Waterproofing | Roof, Basement &amp; Water Tank Waterproofing in Pakistan</title>
     <meta name="description" content="RoyalGrip installs and supplies modified bituminous membrane waterproofing for roofs, basements, water tanks and bathrooms across Pakistan. Free site survey in Lahore, Karachi and Islamabad. 10-year written warranty." />
     <meta name="keywords" content="waterproofing Pakistan, roof waterproofing Lahore, bitumen membrane, torch applied membrane, basement waterproofing, water tank waterproofing, bathroom seepage, roof leakage repair, waterproofing Karachi, waterproofing Islamabad" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#f97316" />
+    <!-- Matches the navy top bar so the phone's browser chrome blends into the page -->
+    <meta name="theme-color" content="#060d1a" />
     <meta name="geo.region" content="PK" />
     <meta name="geo.placename" content="Lahore" />
     <link rel="canonical" href="https://royalgrip.com.pk/" />
@@ -30,10 +32,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <!-- Apply the saved theme before first paint; key must match src/hooks/useTheme.ts -->
+    <!-- Apply the theme before first paint: a saved choice wins, otherwise follow the device setting.
+         Key must match src/hooks/useTheme.ts -->
     <script>
       try {
-        if (localStorage.getItem("royalgrip-theme") === "dark") document.documentElement.classList.add("dark");
+        var saved = localStorage.getItem("royalgrip-theme");
+        if (saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
       } catch (e) {}
     </script>
 

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { canonicalFor, seoFor } from "../../routes";
+import BackToTop from "../ui/BackToTop";
 import WhatsAppButton from "../ui/WhatsAppButton";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -29,6 +30,20 @@ const Layout = () => {
     setAttr('meta[name="twitter:description"]', "content", description);
   }, [pathname]);
 
+  /* Feeds the pointer position to `.spotlight` cards; one delegated listener covers every card, and touch screens skip it */
+  useEffect(() => {
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    const onMove = (e: PointerEvent) => {
+      const card = (e.target as Element | null)?.closest<HTMLElement>(".spotlight");
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      card.style.setProperty("--my", `${e.clientY - r.top}px`);
+    };
+    document.addEventListener("pointermove", onMove, { passive: true });
+    return () => document.removeEventListener("pointermove", onMove);
+  }, []);
+
   useEffect(() => {
     const target = hash ? document.getElementById(hash.slice(1)) : null;
     if (target) target.scrollIntoView();
@@ -36,7 +51,7 @@ const Layout = () => {
   }, [pathname, hash]);
 
   return (
-    <div className="min-h-screen bg-page pb-14 text-body antialiased selection:bg-orange-500 selection:text-white sm:pb-0">
+    <div className="min-h-dvh bg-page pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] text-body antialiased sm:pb-0">
       <a href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-orange-500 focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white">
         Skip to content
@@ -48,6 +63,7 @@ const Layout = () => {
       </main>
       <Footer />
       <WhatsAppButton />
+      <BackToTop />
       <MobileActionBar />
     </div>
   );

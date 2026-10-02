@@ -24,8 +24,8 @@ const About = () => (
       title="Waterproofing done properly, from the survey to the warranty."
       lead="RoyalGrip is a waterproofing contractor and supplier. We sell the materials, we install them with our own crews, and we put our name on the result in writing." />
 
-    <section className="bg-page py-20 lg:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2">
+    <section className="bg-page py-16 sm:py-20 lg:py-28">
+      <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-8 lg:grid-cols-2">
         <Reveal>
           <div>
             <SectionLabel>Who we are</SectionLabel>
@@ -52,7 +52,7 @@ const About = () => (
             <ul className="mt-7 space-y-2.5">
               {WHAT_WE_DO.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm font-semibold text-heading">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {item}
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {item}
                 </li>
               ))}
             </ul>
@@ -77,8 +77,8 @@ const About = () => (
 
     <Stats />
 
-    <section className="bg-page py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section className="bg-page py-16 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         <SectionHeading label="What drives us" title="Fix the cause, not the stain." />
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {VALUES.map((v, i) => (

@@ -30,15 +30,17 @@ const Products = () => {
         lead="A complete range for new construction and repair, supplied nationwide by the roll, pail or drum. Technical data sheets and application guidance come with every order." />
 
       <section className="bg-page py-14 lg:py-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+            {/* One swipeable row on phones instead of four wrapped lines of chips */}
+            <div role="group" aria-label="Filter by category"
+              className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
               {(["All", ...PRODUCT_CATEGORIES] as const).map((c) => (
                 <button type="button" key={c} onClick={() => select(c)} aria-pressed={active === c}
-                  className={`rounded-full border px-4 py-2 text-sm font-bold transition-all ${
+                  className={`min-h-11 shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-bold transition-all ${
                     active === c
                       ? "border-orange-500 bg-orange-500 text-white shadow-lg shadow-orange-500/25"
-                      : "border-line bg-surface text-body hover:border-orange-500 hover:text-orange-500"
+                      : "border-line bg-surface text-body hover:border-orange-500 hover:text-accent"
                   }`}>
                   {c}
                 </button>
@@ -49,7 +51,7 @@ const Products = () => {
               <span className="sr-only">Search products</span>
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
               <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search products"
-                className="w-full rounded-xl border border-line bg-surface py-3 pl-11 pr-4 text-sm text-heading outline-none transition-colors focus:border-orange-500" />
+                className="min-h-12 w-full rounded-xl border border-line bg-surface py-3 pl-11 pr-4 text-sm text-heading outline-none transition-[border-color,box-shadow] focus:border-orange-500 focus:ring-4 focus:ring-orange-500/15" />
             </label>
           </div>
 
@@ -67,7 +69,7 @@ const Products = () => {
               <p className="text-base font-bold text-heading">No products match your search.</p>
               <p className="mt-2 text-sm text-body">Try a different term or category, or ask us directly.</p>
               <button type="button" onClick={() => { setQuery(""); select("All"); }}
-                className="mt-5 text-sm font-bold text-orange-500 hover:underline">
+                className="mt-5 text-sm font-bold text-accent hover:underline">
                 Clear filters
               </button>
             </div>

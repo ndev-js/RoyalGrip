@@ -29,8 +29,8 @@ const ServiceDetail = () => {
         <ButtonLink to={PHONE_URL} variant="ghost"><Phone className="h-4 w-4" /> {PHONE_DISPLAY}</ButtonLink>
       </PageHero>
 
-      <section className="bg-page py-16 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-3">
+      <section className="bg-page py-14 sm:py-16 lg:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-3">
           <div className="space-y-14 lg:col-span-2">
             <Reveal>
               <SectionLabel>Overview</SectionLabel>
@@ -48,7 +48,7 @@ const ServiceDetail = () => {
               <ul className="mt-6 grid gap-4 sm:grid-cols-2">
                 {service.signs.map((s) => (
                   <li key={s} className="flex items-start gap-3 rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-body">
-                    <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" /> {s}
+                    <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-accent" /> {s}
                   </li>
                 ))}
               </ul>
@@ -90,7 +90,7 @@ const ServiceDetail = () => {
                 {others.map((s) => (
                   <li key={s.slug}>
                     <Link to={servicePath(s.slug)}
-                      className="flex items-center justify-between gap-3 py-3 text-sm font-semibold text-body transition-colors hover:text-orange-500">
+                      className="flex items-center justify-between gap-3 py-3 text-sm font-semibold text-body transition-colors hover:text-accent">
                       {s.title} <ChevronRight className="h-4 w-4 shrink-0 opacity-50" />
                     </Link>
                   </li>
@@ -102,8 +102,8 @@ const ServiceDetail = () => {
       </section>
 
       {products.length > 0 && (
-        <section className="bg-surface py-16 lg:py-24">
-          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <section className="bg-surface py-14 sm:py-16 lg:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-8">
             <SectionLabel>Materials</SectionLabel>
             <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-heading sm:text-3xl">Products we use for this work</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

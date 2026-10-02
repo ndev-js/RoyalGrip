@@ -5,7 +5,7 @@ import type { Product } from "../../types";
 import ProductVisual from "./ProductVisual";
 
 const ProductCard = ({ product: p }: { product: Product }) => (
-  <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-raised shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-orange-500/50 hover:shadow-2xl hover:shadow-navy-950/10">
+  <article className="spotlight group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-raised shadow-card transition-all duration-300 ease-out-soft hover:-translate-y-1 hover:border-orange-500/50 hover:shadow-lift">
     <ProductVisual category={p.category} />
 
     <div className="flex flex-1 flex-col p-6">
@@ -18,14 +18,14 @@ const ProductCard = ({ product: p }: { product: Product }) => (
       <ul className="mt-4 space-y-1.5">
         {p.specs.map((s) => (
           <li key={s} className="flex items-start gap-2 text-xs font-medium text-muted">
-            <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-500" /> {s}
+            <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" /> {s}
           </li>
         ))}
       </ul>
 
       <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
         <span className="text-xs font-semibold text-muted">{p.size}</span>
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-orange-500/10 text-orange-500 transition-colors group-hover:bg-orange-500 group-hover:text-white">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-orange-500/10 text-accent transition-colors group-hover:bg-orange-500 group-hover:text-white">
           <ArrowRight className="h-4 w-4" />
         </span>
       </div>

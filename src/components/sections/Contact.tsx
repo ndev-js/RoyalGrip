@@ -12,14 +12,15 @@ const CHANNELS = [
 ];
 
 const Contact = () => (
-  <section id="contact" className="bg-page py-20 lg:py-28">
-    <div className="mx-auto max-w-7xl px-5 sm:px-8">
+  <section id="contact" className="bg-page py-16 sm:py-20 lg:py-28">
+    <div className="mx-auto max-w-7xl px-4 sm:px-8">
       <Reveal>
-        <div className="grid overflow-hidden rounded-[2rem] border border-line shadow-2xl shadow-navy-950/10 lg:grid-cols-5">
+        <div className="grid overflow-hidden rounded-3xl border border-line shadow-lift sm:rounded-[2rem] lg:grid-cols-5">
           {/* Navy in both themes */}
-          <div className="relative isolate overflow-hidden bg-navy-950 p-8 text-white sm:p-10 lg:col-span-2">
+          <div className="relative isolate overflow-hidden bg-navy-950 p-6 text-white sm:p-10 lg:col-span-2">
+            <div className="bg-grid absolute inset-0 -z-10" aria-hidden="true" />
             <div className="absolute -bottom-24 -right-24 -z-10 h-72 w-72 rounded-full bg-orange-500/25 blur-3xl" aria-hidden="true" />
-            <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Tell us where it leaks.</h2>
+            <h2 className="text-title font-extrabold tracking-tight">Tell us where it leaks.</h2>
             <p className="mt-4 text-base leading-relaxed text-slate-300">
               Send a few details and our team will arrange a site visit. Surveys and quotations are free
               inside Lahore, Karachi and Islamabad.

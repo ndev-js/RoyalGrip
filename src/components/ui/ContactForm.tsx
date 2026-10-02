@@ -7,7 +7,7 @@ import { SERVICES } from "../../constants/services";
 
 const SUPPLY_ONLY = "Material supply only";
 
-const FIELD = "w-full rounded-xl border bg-page px-4 py-3 text-sm text-heading outline-none transition-colors placeholder:text-muted focus:border-orange-500";
+const FIELD = "min-h-12 w-full rounded-xl border bg-page px-4 py-3 text-sm text-heading outline-none transition-[border-color,box-shadow] placeholder:text-muted focus:border-orange-500 focus:ring-4 focus:ring-orange-500/15";
 const LABEL = "mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted";
 
 /*
@@ -60,7 +60,7 @@ const ContactForm = ({ compact = false }: { compact?: boolean }) => {
   if (sent) {
     return (
       <div className={compact ? "flex flex-wrap items-center justify-center gap-x-5 gap-y-3 py-3 text-center" : "py-16 text-center"}>
-        <CheckCircle2 className={compact ? "h-9 w-9 text-orange-500" : "mx-auto h-14 w-14 text-orange-500"} />
+        <CheckCircle2 className={compact ? "h-9 w-9 text-accent" : "mx-auto h-14 w-14 text-accent"} />
         <div>
           <h3 className={`font-bold text-heading ${compact ? "text-base" : "mt-5 text-xl"}`}>Almost done, {form.name.trim().split(" ")[0]}</h3>
           <p className={`max-w-sm text-sm text-body ${compact ? "" : "mx-auto mt-2"}`}>
@@ -69,7 +69,7 @@ const ContactForm = ({ compact = false }: { compact?: boolean }) => {
           </p>
         </div>
         <button type="button" onClick={() => { setSent(false); setForm(emptyForm); }}
-          className={`rounded-full border-2 border-orange-500 px-5 py-2.5 text-sm font-bold text-orange-500 transition-colors hover:bg-orange-500 hover:text-white ${compact ? "" : "mt-7"}`}>
+          className={`rounded-full border-2 border-orange-500 px-5 py-2.5 text-sm font-bold text-accent transition-colors hover:bg-orange-500 hover:text-white ${compact ? "" : "mt-7"}`}>
           Start another enquiry
         </button>
       </div>

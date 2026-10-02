@@ -3,10 +3,11 @@ import { ADDRESS, EMAIL, HOURS } from "../../constants/content";
 
 const TopBar = () => (
   <div className="bg-navy-950 text-slate-300">
-    <div className="mx-auto flex max-w-7xl items-center justify-center gap-6 px-5 py-2.5 text-xs font-medium sm:justify-between sm:px-8">
+    <div className="mx-auto flex max-w-7xl items-center justify-center gap-6 px-4 py-2 text-xs font-medium sm:justify-between sm:px-8 sm:py-2.5">
       <p className="inline-flex items-center gap-2 font-semibold text-white">
-        <ShieldCheck className="h-4 w-4 text-orange-500" />
-        Free site survey in Lahore, Karachi &amp; Islamabad
+        <ShieldCheck className="h-4 w-4 shrink-0 text-orange-500" />
+        <span className="sm:hidden">Free site survey · 10-year warranty</span>
+        <span className="hidden sm:inline">Free site survey in Lahore, Karachi &amp; Islamabad</span>
       </p>
       <div className="hidden items-center gap-6 sm:flex">
         <span className="hidden items-center gap-1.5 lg:inline-flex">

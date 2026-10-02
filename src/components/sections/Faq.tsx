@@ -8,8 +8,8 @@ import SectionHeading from "../ui/SectionHeading";
 const Faq = () => {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="bg-page py-20 lg:py-28">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-5 lg:gap-16">
+    <section id="faq" className="bg-page py-16 sm:py-20 lg:py-28">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-5 lg:gap-16">
         <div className="lg:col-span-2">
           <SectionHeading label="FAQ"
             title="Questions clients ask before signing."
@@ -27,12 +27,12 @@ const Faq = () => {
         <div className="space-y-3 lg:col-span-3">
           {FAQS.map((f, i) => (
             <Reveal key={f.q} delay={i * 50}>
-              <div className={`overflow-hidden rounded-2xl border bg-raised transition-shadow ${open === i ? "border-orange-500 shadow-lg" : "border-line"}`}>
+              <div className={`overflow-hidden rounded-2xl border bg-raised transition-[border-color,box-shadow] duration-300 ${open === i ? "border-orange-500/60 shadow-lift" : "border-line shadow-card"}`}>
                 <h3 className="font-sans">
                   <button type="button" onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
+                    className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left sm:px-6">
                     <span className="text-base font-bold text-heading">{f.q}</span>
-                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors ${open === i ? "bg-orange-500 text-white" : "bg-orange-500/10 text-orange-500"}`}>
+                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors ${open === i ? "bg-orange-500 text-white" : "bg-orange-500/10 text-accent"}`}>
                       {open === i ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                     </span>
                   </button>
