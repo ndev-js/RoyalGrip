@@ -1,32 +1,35 @@
 import { PROCESS_STEPS } from "../../constants/content";
-import type { Tokens } from "../../types";
 import Reveal from "../ui/Reveal";
-import SectionLabel from "../ui/SectionLabel";
+import SectionHeading from "../ui/SectionHeading";
 
-const Process = ({ t }: { t: Tokens }) => (
-  <section id="process" className={`py-20 lg:py-28 ${t.surface}`}>
-    <div className="mx-auto max-w-7xl px-5 sm:px-8">
-      <Reveal>
-        <div className="max-w-2xl">
-          <SectionLabel>How we work</SectionLabel>
-          <h2 className={`mt-4 text-3xl font-black tracking-tight sm:text-4xl ${t.heading}`}>
-            Five stages, documented at every step.
-          </h2>
-        </div>
-      </Reveal>
+/* Navy in both themes */
+const Process = () => (
+  <section id="process" className="relative overflow-hidden bg-navy-950 py-20 lg:py-28">
+    <div className="pointer-events-none absolute -left-40 top-0 h-96 w-96 rounded-full bg-orange-500/15 blur-3xl" aria-hidden="true" />
+    <div className="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-navy-700/60 blur-3xl" aria-hidden="true" />
 
-      <div className="mt-14 grid gap-5 lg:grid-cols-5">
+    <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading center onDark label="How we work"
+        title="Five steps from first call to a dry building."
+        lead="Every stage is photographed and documented, so you always know what was done and why." />
+
+      <ol className="relative mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+        {/* Connector behind the numbered circles on desktop */}
+        <li aria-hidden="true" className="absolute left-[10%] right-[10%] top-8 hidden border-t-2 border-dashed border-white/20 lg:block" />
         {PROCESS_STEPS.map((s, i) => (
-          <Reveal key={s.n} delay={i * 90}>
-            <div className={`group relative h-full overflow-hidden rounded-2xl border ${t.border} ${t.raised} p-6 transition-colors hover:border-orange-500`}>
-              <span className="text-3xl font-black text-orange-500/30 transition-colors group-hover:text-orange-500">{s.n}</span>
-              <h3 className={`mt-3 text-base font-bold ${t.heading}`}>{s.title}</h3>
-              <p className={`mt-2 text-sm leading-relaxed ${t.body}`}>{s.desc}</p>
-              <div className="absolute inset-x-6 bottom-0 h-0.5 origin-left scale-x-0 bg-orange-500 transition-transform duration-300 group-hover:scale-x-100" />
-            </div>
-          </Reveal>
+          <li key={s.n} className="relative">
+            <Reveal delay={i * 100}>
+              <div className="group text-center">
+                <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-orange-500 font-display text-xl font-black text-white shadow-lg shadow-orange-500/40 ring-8 ring-navy-950 transition-transform group-hover:scale-110">
+                  {s.n}
+                </span>
+                <h3 className="mt-6 text-lg font-extrabold text-white">{s.title}</h3>
+                <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-slate-300">{s.desc}</p>
+              </div>
+            </Reveal>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </section>
 );

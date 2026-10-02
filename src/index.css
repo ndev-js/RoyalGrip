@@ -1,9 +1,54 @@
 @import "tailwindcss";
 
+/* `dark:` utilities follow the class on <html>, not the OS setting */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light is the default; the `dark` class on <html> switches palette */
+:root {
+  --page: #ffffff;
+  --surface: #f3f6fb;
+  --raised: #ffffff;
+  --line: #e2e8f0;
+  --heading: #0b1629;
+  --body: #475569;
+  --muted: #64748b;
+  color-scheme: light;
+}
+
+:root.dark {
+  --page: #0a1220;
+  --surface: #0f1a2e;
+  --raised: #14213a;
+  --line: #22314f;
+  --heading: #ffffff;
+  --body: #cbd5e1;
+  --muted: #94a3b8;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+}
+
 @theme {
-  --animate-marquee: marquee 28s linear infinite;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Archivo", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fixed brand navy for sections that stay dark in both themes */
+  --color-navy-950: #081120;
+  --color-navy-900: #0d1b33;
+  --color-navy-800: #16294a;
+  --color-navy-700: #223a63;
+
+  --animate-marquee: marquee 40s linear infinite;
   --animate-fade: fade 0.5s ease-out;
-  --animate-pulse-slow: pulseSlow 6s ease-in-out infinite;
+  --animate-float: float 5s ease-in-out infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -15,12 +60,36 @@
     to { opacity: 1; transform: none; }
   }
 
-  @keyframes pulseSlow {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.9; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
   }
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--page);
+  color: var(--body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

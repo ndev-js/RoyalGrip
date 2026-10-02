@@ -1,52 +1,43 @@
-import { useCallback, useEffect, useState } from "react";
 import { Quote, Star } from "lucide-react";
 import { TESTIMONIALS } from "../../constants/content";
-import type { Tokens } from "../../types";
 import Reveal from "../ui/Reveal";
+import SectionHeading from "../ui/SectionHeading";
 
-const Testimonials = ({ t }: { t: Tokens }) => {
-  const [idx, setIdx] = useState(0);
-  const next = useCallback(() => setIdx((i) => (i + 1) % TESTIMONIALS.length), []);
+const initials = (name: string) => name.split(" ").map((w) => w[0]).join("").slice(0, 2);
 
-  useEffect(() => {
-    const id = setInterval(next, 6000);
-    return () => clearInterval(id);
-  }, [next]);
+const Testimonials = () => (
+  <section className="bg-page py-20 lg:py-28">
+    <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading center label="Client reviews"
+        title="Trusted by owners, builders and facility managers."
+        lead="Rated 4.9 out of 5 by more than 180 clients." />
 
-  const tm = TESTIMONIALS[idx];
-
-  return (
-    <section className={`py-20 lg:py-28 ${t.surface}`}>
-      <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <Reveal>
-          <Quote className="mx-auto h-10 w-10 text-orange-500" />
-          <div className="mt-6 min-h-44 sm:min-h-36">
-            <p key={idx} className={`animate-fade text-xl font-medium leading-relaxed sm:text-2xl ${t.heading}`}>
-              {tm.quote}
-            </p>
-            <div className="mt-6">
-              <p className="font-bold text-orange-500">{tm.name}</p>
-              <p className={`text-sm ${t.muted}`}>{tm.role}</p>
-            </div>
-          </div>
-
-          <div className="mt-8 flex items-center justify-center gap-2">
-            {TESTIMONIALS.map((_, i) => (
-              <button key={i} onClick={() => setIdx(i)} aria-label={`Testimonial ${i + 1}`}
-                className={`h-2 rounded-full transition-all ${i === idx ? "w-8 bg-orange-500" : "w-2 bg-zinc-500/40 hover:bg-orange-500/50"}`} />
-            ))}
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-orange-500 text-orange-500" />
-            ))}
-            <span className={`ml-2 text-sm ${t.muted}`}>4.9 average from 180+ clients</span>
-          </div>
-        </Reveal>
+      <div className="mt-14 grid gap-7 lg:grid-cols-3">
+        {TESTIMONIALS.map((tm, i) => (
+          <Reveal key={tm.name} delay={i * 100} className="h-full">
+            <figure className="relative flex h-full flex-col rounded-3xl border border-line bg-raised p-8 shadow-sm transition-shadow hover:shadow-xl">
+              <Quote className="absolute right-7 top-7 h-12 w-12 text-orange-500/15" aria-hidden="true" />
+              <div className="flex gap-0.5" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <Star key={s} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-body">“{tm.quote}”</blockquote>
+              <figcaption className="mt-7 flex items-center gap-4 border-t border-line pt-6">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-navy-950 font-display text-sm font-extrabold text-white dark:bg-orange-500">
+                  {initials(tm.name)}
+                </span>
+                <span>
+                  <span className="block font-bold text-heading">{tm.name}</span>
+                  <span className="block text-sm text-muted">{tm.role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default Testimonials;

@@ -1,52 +1,94 @@
-import { MessageCircle, ShieldCheck } from "lucide-react";
-import { NAV, WHATSAPP_URL } from "../../constants/content";
-import type { Tokens } from "../../types";
+import { ChevronRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Link } from "react-router";
+import { ADDRESS, EMAIL, HOURS, NAV, PHONE_DISPLAY, PHONE_URL, WHATSAPP_URL } from "../../constants/content";
+import { PRODUCT_CATEGORIES } from "../../constants/products";
+import { SERVICES } from "../../constants/services";
+import { servicePath } from "../../routes";
 import Logo from "../ui/Logo";
 
-const STANDARDS = ["ASTM-compliant membranes", "Certified torch applicators", "10-year system warranty", "Nationwide delivery"];
+const HEADING = "font-sans text-sm font-extrabold uppercase tracking-[0.14em] text-white";
+const LINK = "group inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-orange-400";
 
-const Footer = ({ t }: { t: Tokens }) => (
-  <footer className={`border-t ${t.border} ${t.page}`}>
-    <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
-      <div className="grid gap-10 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <Logo t={t} />
-          <p className={`mt-5 max-w-sm text-sm leading-relaxed ${t.body}`}>
+/* Navy in both themes */
+const Footer = () => (
+  <footer className="bg-navy-950 text-slate-400">
+    <div className="h-1 bg-linear-to-r from-orange-500 via-amber-400 to-orange-500" />
+    <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+      <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="sm:col-span-2 lg:col-span-4">
+          <Logo onDark />
+          <p className="mt-5 max-w-sm text-sm leading-relaxed">
             RoyalGrip Waterproofing Solutions — modified bituminous membrane systems, protective coatings
             and construction chemicals, installed and supplied across Pakistan.
           </p>
           <a href={WHATSAPP_URL}
-            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-orange-600">
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-emerald-600">
             <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
           </a>
         </div>
 
-        <div>
-          <h4 className={`text-xs font-bold uppercase tracking-[0.18em] ${t.heading}`}>Explore</h4>
-          <ul className="mt-4 space-y-2.5">
-            {NAV.map((n) => (
-              <li key={n.href}>
-                <a href={n.href} className={`text-sm transition-colors ${t.body} hover:text-orange-500`}>{n.label}</a>
+        <nav aria-label="Services" className="lg:col-span-3">
+          <h2 className={HEADING}>Services</h2>
+          <ul className="mt-5 space-y-3">
+            {SERVICES.map((s) => (
+              <li key={s.slug}>
+                <Link to={servicePath(s.slug)} className={LINK}>
+                  <ChevronRight className="h-3.5 w-3.5 text-orange-500" /> {s.title}
+                </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
-        <div>
-          <h4 className={`text-xs font-bold uppercase tracking-[0.18em] ${t.heading}`}>Standards</h4>
-          <ul className={`mt-4 space-y-2.5 text-sm ${t.body}`}>
-            {STANDARDS.map((s) => (
-              <li key={s} className="flex items-start gap-2">
-                <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {s}
+        <nav aria-label="Products" className="lg:col-span-2">
+          <h2 className={HEADING}>Products</h2>
+          <ul className="mt-5 space-y-3">
+            {PRODUCT_CATEGORIES.map((c) => (
+              <li key={c}>
+                <Link to={`/products/?category=${encodeURIComponent(c)}`} className={LINK}>
+                  <ChevronRight className="h-3.5 w-3.5 text-orange-500" /> {c}
+                </Link>
               </li>
             ))}
+          </ul>
+        </nav>
+
+        <div className="lg:col-span-3">
+          <h2 className={HEADING}>Contact</h2>
+          <ul className="mt-5 space-y-4 text-sm">
+            <li>
+              <a href={PHONE_URL} className="flex items-center gap-3 font-bold text-white transition-colors hover:text-orange-400">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/5"><Phone className="h-4 w-4 text-orange-500" /></span>
+                {PHONE_DISPLAY}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 transition-colors hover:text-orange-400">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/5"><Mail className="h-4 w-4 text-orange-500" /></span>
+                {EMAIL}
+              </a>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/5"><MapPin className="h-4 w-4 text-orange-500" /></span>
+              {ADDRESS}
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/5"><Clock className="h-4 w-4 text-orange-500" /></span>
+              {HOURS}
+            </li>
           </ul>
         </div>
       </div>
 
-      <div className={`mt-12 flex flex-col items-center justify-between gap-3 border-t ${t.border} pt-7 sm:flex-row`}>
-        <p className={`text-xs ${t.muted}`}>© {new Date().getFullYear()} RoyalGrip Waterproofing Solutions. All rights reserved.</p>
-        <p className={`text-xs ${t.muted}`}>Modified Bituminous Membrane · Built for Pakistan's climate</p>
+      <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-7 lg:flex-row">
+        <p className="text-xs">© {new Date().getFullYear()} RoyalGrip Waterproofing Solutions. All rights reserved.</p>
+        <nav aria-label="Footer">
+          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {NAV.map((n) => (
+              <li key={n.to}><Link to={n.to} className="text-xs transition-colors hover:text-orange-400">{n.label}</Link></li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   </footer>

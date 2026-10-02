@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 const SectionLabel = ({ children }: { children: ReactNode }) => (
-  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-    <span className="h-px w-6 bg-orange-500" />
+  <span className="inline-flex items-center gap-2 rounded-full bg-orange-500/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-orange-600 ring-1 ring-orange-500/20 dark:text-orange-400">
+    <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
     {children}
   </span>
 );

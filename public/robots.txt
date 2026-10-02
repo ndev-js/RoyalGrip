@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://royalgrip.com.pk/sitemap.xml

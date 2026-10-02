@@ -1,61 +1,75 @@
-import { Building2, Droplets, Factory, Flame, Home, Waves } from "lucide-react";
-import type { Faq, NavItem, ProcessStep, Product, Project, Service, Stat, Testimonial } from "../types";
+import {
+  Building2, ClipboardList, Droplets, Eye, Factory, Handshake, HardHat, Home, Landmark,
+  ShieldCheck, Target, ThermometerSun, Truck,
+} from "lucide-react";
+import type {
+  Faq, Feature, NavItem, ProcessStep, Project, Sector, Stat, Testimonial,
+} from "../types";
 
+export const PHONE_DISPLAY = "+92 300 0000000";
+export const PHONE_URL = "tel:+923000000000";
+export const EMAIL = "info@royalgrip.com.pk";
 export const WHATSAPP_URL = "https://wa.me/923000000000";
+export const ADDRESS = "Lahore, Pakistan";
+export const HOURS = "Mon – Sat, 9am – 6pm";
 
 export const NAV: NavItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Products", href: "#products" },
-  { label: "Process", href: "#process" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about/" },
+  { label: "Services", to: "/services/" },
+  { label: "Products", to: "/products/" },
+  { label: "Projects", to: "/projects/" },
+  { label: "Contact", to: "/contact/" },
 ];
 
-export const SERVICES: Service[] = [
+/* Scrolling strip under the hero */
+export const CAPABILITIES = [
+  "Roof waterproofing", "Basement tanking", "Water tank lining", "Bathroom seepage",
+  "Torch-applied membrane", "Self-adhesive membrane", "Damp proof course", "Expansion joints",
+  "Liquid coatings", "Concrete admixtures", "Leak diagnosis", "Tile adhesives & grouts",
+];
+
+export const SECTORS: Sector[] = [
   {
-    icon: Home, title: "Roof & Terrace Waterproofing",
-    desc: "Torch-applied modified bituminous membrane that seals flat roofs against monsoon downpours and 50°C summers.",
-    points: ["Single & double layer systems", "Slate or aluminium finish", "10-year written warranty"],
+    icon: Home, image: "/images/residential.jpg", title: "Residential",
+    desc: "Homes, villas and apartment blocks protected from roof leakage and seepage.",
+    items: ["Roofs & terraces", "Bathrooms & kitchens", "DPC & foundations", "Overhead water tanks"],
   },
   {
-    icon: Building2, title: "Basement & Foundation",
-    desc: "Tanking systems that hold back rising damp and hydrostatic pressure before the structure is backfilled.",
-    points: ["Positive & negative side", "Protection board install", "Drainage layer detailing"],
+    icon: Building2, image: "/images/commercial.jpg", title: "Commercial",
+    desc: "Plazas, offices, hospitals and hotels kept dry without closing the building.",
+    items: ["Basements & parking", "Podium decks", "Expansion joints", "Lift pits & plant rooms"],
   },
   {
-    icon: Waves, title: "Water Tanks & Pools",
-    desc: "Safe lining for underground tanks, overhead tanks and swimming pools with full leak testing.",
-    points: ["48-hour flood test", "Potable-safe coatings", "Crack bridging up to 2mm"],
+    icon: Factory, image: "/images/factory.jpg", title: "Industrial",
+    desc: "Large-span roofs and process areas sequenced around your production.",
+    items: ["Factory roofs", "Warehouses", "Cold storage", "Effluent & water tanks"],
   },
   {
-    icon: Droplets, title: "Bathroom & Wet Areas",
-    desc: "Thin-film liquid membranes applied beneath tiling to stop seepage reaching the room below.",
-    points: ["No slab demolition", "Dries in 6 hours", "Tile-over ready"],
-  },
-  {
-    icon: Factory, title: "Industrial & Commercial",
-    desc: "Large-span factory roofs, warehouses and plazas sequenced around your production calendar.",
-    points: ["Night & weekend crews", "100,000+ sq.ft capacity", "HSE-compliant teams"],
-  },
-  {
-    icon: Flame, title: "Leak Diagnosis & Repair",
-    desc: "We trace the actual entry point instead of patching the stain, then repair with a compatible system.",
-    points: ["Moisture mapping", "Free site survey", "Same-week mobilisation"],
+    icon: Landmark, image: "/images/infrastructure.jpg", title: "Infrastructure",
+    desc: "Heavy-duty membrane systems for structures built to last decades.",
+    items: ["Bridge decks", "Underpasses & tunnels", "Reservoirs", "Retaining walls"],
   },
 ];
 
-export const PRODUCT_CATEGORIES = ["All", "Membrane", "Coating", "Chemical"] as const;
+export const WHY_US: Feature[] = [
+  { icon: ShieldCheck, title: "10-year written warranty", desc: "Material and workmanship covered on paper for every full-system installation." },
+  { icon: ClipboardList, title: "Free survey, itemised quote", desc: "Every layer, quantity and rate listed up front. No surprise additions later." },
+  { icon: HardHat, title: "Our own trained crews", desc: "Certified torch applicators working under supervision on every site." },
+  { icon: Droplets, title: "Flood tested before handover", desc: "We pond the surface and document the result before you sign off." },
+  { icon: ThermometerSun, title: "Built for Pakistan's climate", desc: "Systems specified for monsoon downpours and 50°C summer roof temperatures." },
+  { icon: Truck, title: "Supply and installation", desc: "Membranes, primers and chemicals dispatched nationwide, with or without our crew." },
+];
 
-export const PRODUCTS: Product[] = [
-  { id: "rg-torch-4", name: "RoyalGrip Torch 4000", category: "Membrane", tagline: "APP-modified torch-on membrane for roofs, decks and foundations.", size: "3mm / 4mm / 5mm", specs: ["Polyester reinforced core", "Softening point 150°C", "Elongation ≥ 45%"] },
-  { id: "rg-slate", name: "RoyalGrip SlateShield", category: "Membrane", tagline: "Mineral-granule surface for permanently exposed rooftops.", size: "4mm roll", specs: ["UV-stable slate finish", "No screed required", "Charcoal & terracotta"] },
-  { id: "rg-alu", name: "RoyalGrip AluGuard", category: "Membrane", tagline: "Aluminium-faced membrane that reflects heat off the slab.", size: "4mm roll", specs: ["Reflects ~70% solar gain", "Lowers roof temp 8–12°C", "Embossed foil face"] },
-  { id: "rg-root", name: "RoyalGrip RootBlock", category: "Membrane", tagline: "Anti-root membrane for planters, lawns and green roofs.", size: "4mm roll", specs: ["Chemical root barrier", "Planter-box detailing", "Garden-deck tested"] },
-  { id: "rg-primer", name: "RoyalGrip Bitumen Primer", category: "Chemical", tagline: "Fast-drying primer that locks the membrane onto concrete.", size: "18L / 200L", specs: ["Touch-dry in 60 min", "Coverage 5–6 m²/L", "Low-odour formulation"] },
-  { id: "rg-liquid", name: "RoyalGrip FlexCoat", category: "Coating", tagline: "Elastomeric liquid membrane for wet areas and awkward geometry.", size: "5kg / 20kg", specs: ["Brush, roller or spray", "Bridges 2mm cracks", "Tile-over compatible"] },
-  { id: "rg-plast", name: "GripPlast SP", category: "Chemical", tagline: "High-range superplasticiser for dense, low-permeability concrete.", size: "20L / 200L", specs: ["Up to 25% water cut", "Chloride free", "ASTM C494 Type F"] },
-  { id: "rg-cure", name: "GripCure W", category: "Coating", tagline: "Curing compound that holds moisture in fresh slabs and pavements.", size: "20L / 200L", specs: ["Retains ≥ 90% moisture", "Single-coat spray", "Reduces plastic cracking"] },
+export const VALUES: Feature[] = [
+  { icon: Target, title: "Our mission", desc: "To make leaking roofs and damp walls a solved problem for every building we touch, by fixing the cause instead of the symptom." },
+  { icon: Eye, title: "Our vision", desc: "To be the waterproofing name contractors, consultants and homeowners across Pakistan specify without a second quote." },
+  { icon: Handshake, title: "How we behave", desc: "Written scopes, honest advice on what you do and do not need, and a crew that turns up on the agreed day." },
+];
+
+export const CITIES = [
+  "Lahore", "Karachi", "Islamabad", "Rawalpindi", "Faisalabad", "Multan",
+  "Peshawar", "Quetta", "Sialkot", "Gujranwala", "Hyderabad", "Bahawalpur",
 ];
 
 export const PROCESS_STEPS: ProcessStep[] = [
@@ -67,12 +81,12 @@ export const PROCESS_STEPS: ProcessStep[] = [
 ];
 
 export const PROJECTS: Project[] = [
-  { name: "Gulberg Heights", sector: "Residential Tower", city: "Lahore", area: "82,000 sq.ft" },
-  { name: "Korangi Packaging Plant", sector: "Industrial Roof", city: "Karachi", area: "140,000 sq.ft" },
-  { name: "Blue Area Office Block", sector: "Basement Tanking", city: "Islamabad", area: "36,000 sq.ft" },
-  { name: "DHA Phase 6 Villas", sector: "Roof & Wet Areas", city: "Lahore", area: "24 units" },
-  { name: "Civil Hospital Annexe", sector: "Terrace & Tanks", city: "Multan", area: "51,000 sq.ft" },
-  { name: "Ring Road Logistics Park", sector: "Warehouse Deck", city: "Peshawar", area: "96,000 sq.ft" },
+  { image: "/images/city.jpg", name: "Gulberg Heights", sector: "Residential", city: "Lahore", area: "82,000 sq.ft", scope: "Roof terraces and podium deck with 4mm torch-applied membrane and slate finish." },
+  { image: "/images/plant.jpg", name: "Korangi Packaging Plant", sector: "Industrial", city: "Karachi", area: "140,000 sq.ft", scope: "Phased re-roofing with aluminium-faced membrane, carried out on night shifts." },
+  { image: "/images/basement-room.jpg", name: "Blue Area Office Block", sector: "Commercial", city: "Islamabad", area: "36,000 sq.ft", scope: "Basement raft and retaining wall tanking with protection board before backfill." },
+  { image: "/images/villa.jpg", name: "DHA Phase 6 Villas", sector: "Residential", city: "Lahore", area: "24 units", scope: "Roof membrane, bathroom liquid membrane and plinth damp proof course." },
+  { image: "/images/commercial.jpg", name: "Civil Hospital Annexe", sector: "Commercial", city: "Multan", area: "51,000 sq.ft", scope: "Terrace waterproofing and lining of underground and overhead water tanks." },
+  { image: "/images/logistics.jpg", name: "Ring Road Logistics Park", sector: "Industrial", city: "Peshawar", area: "96,000 sq.ft", scope: "Warehouse deck membrane with expansion joint sealing across the full span." },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -83,6 +97,7 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const FAQS: Faq[] = [
   { q: "How long does a modified bituminous membrane last?", a: "A correctly installed torch-on system with proper surface protection typically performs for 12 to 20 years. We issue a written 10-year warranty covering both material and workmanship on full-system installations." },
+  { q: "What is the difference between APP and SBS membranes?", a: "APP (plastomeric) membranes are torch-applied and handle high roof temperatures well, which suits exposed roofs in Pakistan. SBS (elastomeric) membranes are more flexible and are available as self-adhesive sheets, which suits basements, foundations and places where a torch cannot be used." },
   { q: "Do you work outside Lahore?", a: "Yes. Our crews mobilise across Punjab, Sindh, KPK and Balochistan, and material is dispatched nationwide. For sites beyond 200km we quote travel and accommodation transparently inside the proposal." },
   { q: "Can you waterproof an occupied building?", a: "Most of our work happens on live sites. Roof and terrace applications rarely require vacating. For wet areas we sequence room by room so the family or staff always keep a working bathroom." },
   { q: "What does a survey cost?", a: "Site survey and written quotation are free within the city limits of Lahore, Karachi and Islamabad. The survey includes moisture mapping, photographs, and a scope that itemises every layer we intend to install." },
@@ -95,5 +110,3 @@ export const STATS: Stat[] = [
   { value: 12, suffix: "M", label: "Sq.ft membrane laid" },
   { value: 10, suffix: "yr", label: "Written warranty" },
 ];
-
-export const CLIENTS = ["Habib Group", "Pak Cement", "Meezan Builders", "Descon", "Ittefaq Steel", "Nishat Mills", "Crescent Textiles", "Fatima Group"];

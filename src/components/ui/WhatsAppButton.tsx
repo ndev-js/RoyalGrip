@@ -3,8 +3,8 @@ import { WHATSAPP_URL } from "../../constants/content";
 
 const WhatsAppButton = () => (
   <a href={WHATSAPP_URL} aria-label="Chat on WhatsApp"
-    className="fixed bottom-6 right-6 z-40 grid h-14 w-14 place-items-center rounded-full bg-orange-500 text-white shadow-2xl shadow-orange-500/40 transition-transform hover:scale-110">
-    <MessageCircle className="h-6 w-6" />
+    className="fixed bottom-6 right-6 z-40 hidden h-14 items-center gap-2.5 rounded-full bg-emerald-500 pl-4 pr-5 text-sm font-bold text-white shadow-2xl shadow-emerald-500/40 transition-transform hover:scale-105 sm:inline-flex">
+    <MessageCircle className="h-6 w-6" /> Chat with us
   </a>
 );
 

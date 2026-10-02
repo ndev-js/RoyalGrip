@@ -1,41 +1,30 @@
-import { useState } from "react";
-import Footer from "./components/layout/Footer";
-import Header from "./components/layout/Header";
-import Contact from "./components/sections/Contact";
-import Faq from "./components/sections/Faq";
-import Hero from "./components/sections/Hero";
-import Marquee from "./components/sections/Marquee";
-import Process from "./components/sections/Process";
-import Products from "./components/sections/Products";
-import Projects from "./components/sections/Projects";
-import Services from "./components/sections/Services";
-import Stats from "./components/sections/Stats";
-import Testimonials from "./components/sections/Testimonials";
-import WhatsAppButton from "./components/ui/WhatsAppButton";
-import { TOKENS } from "./constants/theme";
-import type { Theme } from "./types";
+import { Route, Routes } from "react-router";
+import Layout from "./components/layout/Layout";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import ProductDetail from "./pages/ProductDetail";
+import Products from "./pages/Products";
+import Projects from "./pages/Projects";
+import ServiceDetail from "./pages/ServiceDetail";
+import Services from "./pages/Services";
 
+/* Rendered inside BrowserRouter on the client (main.tsx) and StaticRouter when prerendering (entry-server.tsx) */
 export default function App() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const t = TOKENS[theme];
-
   return (
-    <div className={`min-h-screen ${t.page} ${t.body} antialiased transition-colors duration-500 selection:bg-orange-500 selection:text-white`}>
-      <Header t={t} theme={theme} toggle={() => setTheme(theme === "dark" ? "light" : "dark")} />
-      <main>
-        <Hero t={t} theme={theme} />
-        <Stats t={t} />
-        <Marquee t={t} />
-        <Services t={t} />
-        <Products t={t} />
-        <Process t={t} />
-        <Projects t={t} />
-        <Testimonials t={t} />
-        <Faq t={t} />
-        <Contact t={t} />
-      </main>
-      <Footer t={t} />
-      <WhatsAppButton />
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="services" element={<Services />} />
+        <Route path="services/:slug" element={<ServiceDetail />} />
+        <Route path="products" element={<Products />} />
+        <Route path="products/:slug" element={<ProductDetail />} />
+        <Route path="projects" element={<Projects />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }

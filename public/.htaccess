@@ -1,0 +1,2 @@
+# Apache / cPanel hosting: every page is a prerendered static file, unknown URLs get the 404 page
+ErrorDocument 404 /404.html

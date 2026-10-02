@@ -2,23 +2,31 @@ import type { ElementType } from "react";
 
 export type Theme = "dark" | "light";
 
-export interface Tokens {
-  page: string; surface: string; raised: string; border: string;
-  heading: string; body: string; muted: string; inputBg: string;
-}
-
-export interface NavItem { label: string; href: string }
+export interface NavItem { label: string; to: string }
 
 export interface Service {
-  icon: ElementType; title: string; desc: string; points: string[];
+  slug: string; icon: ElementType; image: string; title: string; desc: string; points: string[];
+  intro: string; signs: string[]; approach: string[]; products: string[];
 }
+
+export interface Sector {
+  icon: ElementType; image: string; title: string; desc: string; items: string[];
+}
+
+export interface Feature { icon: ElementType; title: string; desc: string }
+
+export type ProductCategory =
+  | "Membranes" | "Liquid Coatings" | "Primers & Bitumen" | "Sealants"
+  | "Admixtures & Repair" | "Tile Adhesives & Grouts" | "Accessories";
 
 export interface Product {
-  id: string; name: string; category: "Membrane" | "Coating" | "Chemical";
-  tagline: string; size: string; specs: string[];
+  slug: string; name: string; category: ProductCategory;
+  tagline: string; description: string; size: string;
+  specs: string[]; applications: string[]; method: string;
+  featured?: boolean;
 }
 
-export interface Project { name: string; sector: string; city: string; area: string }
+export interface Project { image: string; name: string; sector: string; city: string; area: string; scope: string }
 export interface Testimonial { name: string; role: string; quote: string }
 export interface Faq { q: string; a: string }
 export interface Stat { value: number; suffix: string; label: string }
