@@ -1,15 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronRight, Menu, MessageCircle, Moon, Phone, PhoneCall, Sun, X } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronRight, Menu, MessageCircle, Moon, Phone, PhoneCall, Sun, X } from "lucide-react";
 import { Link, NavLink } from "react-router";
 import { NAV, PHONE_DISPLAY, PHONE_URL, WHATSAPP_URL } from "../../constants/content";
+import { PRODUCT_CATEGORIES } from "../../constants/products";
+import { SERVICES } from "../../constants/services";
+import { servicePath } from "../../routes";
 import { useTheme } from "../../hooks/useTheme";
 import Logo from "../ui/Logo";
 
 const ICON_BUTTON = "grid h-11 w-11 place-items-center rounded-full border border-line transition-colors hover:border-orange-500 hover:text-orange-500";
 
+/* Desktop nav links: an underline grows out from the centre on hover and stays for the current page */
+const NAV_LINK = "relative flex items-center gap-1 px-3.5 py-2 text-sm font-bold transition-colors after:absolute after:inset-x-3.5 after:-bottom-0.5 after:h-0.5 after:origin-center after:rounded-full after:bg-orange-500 after:transition-transform after:duration-300 after:ease-out-soft hover:text-accent";
+
+const PANEL = "rounded-3xl border border-line bg-raised p-3 shadow-lift";
+const PANEL_ITEM = "group/item flex items-start gap-3 rounded-2xl p-3 transition-colors hover:bg-surface";
+
 const Header = () => {
   const { toggle } = useTheme();
   const [open, setOpen] = useState(false);
+  /* Which desktop dropdown is showing, by the nav item's path */
+  const [menu, setMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const progress = useRef<HTMLDivElement>(null);
 
@@ -55,19 +66,70 @@ const Header = () => {
         className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-linear-to-r from-orange-500 via-amber-400 to-orange-500" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
-        <div className="flex h-16 items-center justify-between gap-3 lg:h-20">
+        <div className={`flex h-16 items-center justify-between gap-3 transition-[height] duration-300 ease-out-soft ${scrolled ? "lg:h-16" : "lg:h-20"}`}>
           <span onClick={close}><Logo /></span>
 
-          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-            {NAV.map((i) => (
-              <NavLink key={i.to} to={i.to} end={i.to === "/"}
-                className={({ isActive }) =>
-                  `rounded-full px-4 py-2 text-sm font-bold transition-colors ${
-                    isActive ? "bg-orange-500/10 text-accent" : "text-heading hover:bg-surface hover:text-accent"
-                  }`}>
-                {i.label}
-              </NavLink>
-            ))}
+          <nav aria-label="Main" className="hidden items-center lg:flex">
+            {NAV.map((i) => {
+              const panel = i.to === "/services/" ? "services" : i.to === "/products/" ? "products" : null;
+              const shown = menu === i.to;
+              return (
+                <div key={i.to} className="relative"
+                  onMouseEnter={() => panel && setMenu(i.to)} onMouseLeave={() => setMenu(null)}
+                  onFocus={() => panel && setMenu(i.to)}
+                  onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setMenu(null)}>
+                  <NavLink to={i.to} end={i.to === "/"} onClick={() => setMenu(null)}
+                    className={({ isActive }) =>
+                      `${NAV_LINK} ${isActive ? "text-accent after:scale-x-100" : "text-heading after:scale-x-0 hover:after:scale-x-100"}`}>
+                    {i.label}
+                    {panel && <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${shown ? "rotate-180" : ""}`} />}
+                  </NavLink>
+
+                  {/* The top padding bridges the gap to the link, so the pointer can travel down without the menu closing */}
+                  {panel && (
+                    <div className={`absolute left-1/2 top-full -translate-x-1/2 pt-4 transition-[opacity,translate,visibility] duration-200 ease-out-soft ${
+                      shown ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
+                    }`}>
+                      {panel === "services" ? (
+                        <ul className={`${PANEL} grid w-[38rem] grid-cols-2 gap-1`}>
+                          {SERVICES.map((s) => (
+                            <li key={s.slug}>
+                              <Link to={servicePath(s.slug)} onClick={() => setMenu(null)} className={PANEL_ITEM}>
+                                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-orange-500/10 text-accent transition-colors group-hover/item:bg-orange-500 group-hover/item:text-white">
+                                  <s.icon className="h-5 w-5" />
+                                </span>
+                                <span>
+                                  <span className="block text-sm font-bold text-heading">{s.title}</span>
+                                  <span className="mt-0.5 block text-xs leading-snug text-muted">{s.points[0]}</span>
+                                </span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <ul className={`${PANEL} w-80`}>
+                          {PRODUCT_CATEGORIES.map((c) => (
+                            <li key={c}>
+                              <Link to={`/products/?category=${encodeURIComponent(c)}`} onClick={() => setMenu(null)}
+                                className="group/item flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-sm font-bold text-heading transition-colors hover:bg-surface hover:text-accent">
+                                {c}
+                                <ChevronRight className="h-4 w-4 text-muted transition-transform group-hover/item:translate-x-0.5 group-hover/item:text-accent" />
+                              </Link>
+                            </li>
+                          ))}
+                          <li className="mt-2 border-t border-line pt-2">
+                            <Link to="/products/" onClick={() => setMenu(null)}
+                              className="flex items-center justify-between rounded-xl bg-orange-500/10 px-3.5 py-2.5 text-sm font-extrabold text-accent transition-colors hover:bg-orange-500 hover:text-white">
+                              View all products <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
@@ -86,8 +148,11 @@ const Header = () => {
               <Sun className="hidden h-4 w-4 dark:block" />
             </button>
             <Link to="/contact/" onClick={close}
-              className="hidden h-11 items-center rounded-full bg-orange-500 px-6 text-sm font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:-translate-y-0.5 hover:bg-orange-600 active:translate-y-0 sm:inline-flex">
+              className="shine group hidden h-11 items-center gap-2 rounded-full bg-linear-to-r from-orange-500 to-orange-600 pl-6 pr-2 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange-500/40 active:translate-y-0 sm:inline-flex">
               Get a Free Quote
+              <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 transition-transform duration-300 ease-out-soft group-hover:translate-x-0.5">
+                <ArrowRight className="h-4 w-4" />
+              </span>
             </Link>
             <button type="button" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open} aria-controls="mobile-menu" className={`${ICON_BUTTON} text-heading lg:hidden`}>

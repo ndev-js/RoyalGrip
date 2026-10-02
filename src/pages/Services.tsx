@@ -8,7 +8,7 @@ import PageHero from "../components/ui/PageHero";
 
 const Services = () => (
   <>
-    <PageHero crumbs={[{ label: "Services" }]}
+    <PageHero crumbs={[{ label: "Services" }]} wave="text-surface"
       title="Waterproofing services for roofs, basements, tanks and wet areas."
       lead="Survey, specification, installation and testing by our own crews, anywhere in Pakistan. Every full-system installation carries a 10-year written warranty.">
       <ButtonLink to="/contact/" arrow>Book a free survey</ButtonLink>

@@ -69,14 +69,21 @@
   --animate-marquee: marquee 40s linear infinite;
   --animate-fade: fade 0.7s var(--ease-out-soft) both;
   --animate-float: float 5s ease-in-out infinite;
-  --animate-rise: rise 16s linear infinite;
   --animate-pan: pan 6s ease-in-out infinite alternate;
+  --animate-page: page-in 0.45s ease-out both;
+  --animate-progress: progress 6s linear both;
 
-  @keyframes rise {
-    0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
-    15% { opacity: 1; }
-    85% { opacity: 0.8; }
-    100% { transform: translate3d(var(--sway, 0px), -85vh, 0) scale(1.1); opacity: 0; }
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  --animate-wave: marquee 34s linear infinite;
+  --animate-wave-slow: marquee 52s linear infinite reverse;
+
+  /* Opacity only: a transform here would re-anchor sticky and fixed children of the page */
+  @keyframes page-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   @keyframes pan {
@@ -193,6 +200,59 @@
   &:hover::after {
     transform: translateX(380%) skewX(-20deg);
   }
+}
+
+/* --- Banner diagram (RoofBuild.tsx): the layers drop in one after another, then a water drop runs off the top --- */
+@keyframes roof-layer-in {
+  from { opacity: 0; transform: translateY(-80px); }
+  60% { opacity: 1; }
+  78% { transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes roof-label-in {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Positions are in the SVG's own units: (190, 104) is the centre of the top face, (265, 141) its front-right edge */
+@keyframes roof-drop {
+  0% { opacity: 0; transform: translate(190px, -30px); animation-timing-function: ease-in; }
+  3% { opacity: 1; }
+  13% { transform: translate(190px, 96px) scale(1, 1); animation-timing-function: ease-out; }
+  16% { transform: translate(190px, 99px) scale(1.35, 0.6); }
+  20% { transform: translate(193px, 98px) scale(1, 1); animation-timing-function: ease-in-out; }
+  42% { opacity: 1; transform: translate(265px, 136px) scale(1, 1); animation-timing-function: ease-in; }
+  56% { opacity: 0; transform: translate(270px, 330px) scale(0.9, 1.15); }
+  100% { opacity: 0; transform: translate(270px, 330px); }
+}
+
+@keyframes roof-ripple {
+  0%, 13% { opacity: 0; transform: scale(0.15); }
+  14% { opacity: 0.9; }
+  30% { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+.roof-layer {
+  animation: roof-layer-in 0.9s var(--ease-out-soft) both;
+}
+
+.roof-label {
+  animation: roof-label-in 0.6s var(--ease-out-soft) both;
+}
+
+/* The first drop waits for the last layer; after that one falls every seven seconds */
+.roof-drop {
+  opacity: 0;
+  animation: roof-drop 7s linear 3.4s infinite;
+}
+
+.roof-ripple {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: roof-ripple 7s linear 3.4s infinite;
 }
 
 /* Hero photo drifts slower than the page as you scroll (browsers without scroll timelines just show it still) */

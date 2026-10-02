@@ -3,13 +3,18 @@ import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
 import { canonicalFor } from "../../routes";
 import JsonLd from "./JsonLd";
+import Waves from "./Waves";
 
 export interface Crumb { label: string; to?: string }
 
-interface Props { crumbs: Crumb[]; title: ReactNode; lead?: ReactNode; image?: string; children?: ReactNode }
+interface Props {
+  crumbs: Crumb[]; title: ReactNode; lead?: ReactNode; image?: string; children?: ReactNode;
+  /* Text colour class matching the background of whatever section follows the banner */
+  wave?: string;
+}
 
 /* Banner for inner pages: photo backdrop, breadcrumb trail, h1 and intro */
-const PageHero = ({ crumbs, title, lead, image = "/images/concrete.jpg", children }: Props) => {
+const PageHero = ({ crumbs, title, lead, image = "/images/concrete.jpg", children, wave = "text-page" }: Props) => {
   const trail: Crumb[] = [{ label: "Home", to: "/" }, ...crumbs];
 
   return (
@@ -18,9 +23,9 @@ const PageHero = ({ crumbs, title, lead, image = "/images/concrete.jpg", childre
         className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40" />
       <div className="absolute inset-0 -z-10 bg-linear-to-r from-navy-950 via-navy-950/90 to-navy-950/40" />
       <div className="bg-grid absolute inset-0 -z-10" aria-hidden="true" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-1 bg-linear-to-r from-orange-500 via-amber-400 to-orange-500" />
+      <Waves className={`-z-10 ${wave}`} />
 
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-8 sm:py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-8 sm:pb-28 sm:pt-16 lg:pb-36 lg:pt-24">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs font-semibold text-slate-300">
             {trail.map((c, i) => (

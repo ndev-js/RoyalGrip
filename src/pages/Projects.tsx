@@ -6,7 +6,7 @@ import PageHero from "../components/ui/PageHero";
 
 const Projects = () => (
   <>
-    <PageHero crumbs={[{ label: "Projects" }]}
+    <PageHero crumbs={[{ label: "Projects" }]} wave="text-navy-900"
       title="Waterproofing projects across Pakistan."
       lead="Homes, towers, hospitals and factories in Lahore, Karachi, Islamabad and beyond, each handed over with a flood test record and a written warranty." />
     <Stats />

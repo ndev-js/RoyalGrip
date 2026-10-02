@@ -33,8 +33,8 @@ const WhyUs = () => (
         <div className="mt-10 grid gap-x-8 gap-y-7 sm:grid-cols-2">
           {WHY_US.map((f, i) => (
             <Reveal key={f.title} delay={i * 60}>
-              <div className="flex gap-4">
-                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-raised text-accent shadow-md ring-1 ring-line">
+              <div className="group flex gap-4">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-raised text-accent shadow-md ring-1 ring-line transition-all duration-300 ease-out-soft group-hover:-translate-y-1 group-hover:bg-orange-500 group-hover:text-white group-hover:ring-orange-500">
                   <f.icon className="h-5.5 w-5.5" />
                 </div>
                 <div>

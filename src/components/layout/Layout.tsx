@@ -59,7 +59,10 @@ const Layout = () => {
       <TopBar />
       <Header />
       <main id="main">
-        <Outlet />
+        {/* Re-keyed per page so each navigation fades the new page in */}
+        <div key={pathname} className="animate-page">
+          <Outlet />
+        </div>
       </main>
       <Footer />
       <WhatsAppButton />
